@@ -2,6 +2,7 @@ var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleHauler = require('role.hauler');
 var roleSpawner = require('role.spawner');
+var roleTower = require('role.tower');
 
 module.exports.loop = function () {
     for(var name in Memory.creeps) {
@@ -23,4 +24,8 @@ module.exports.loop = function () {
         }
     }
     roleSpawner.run(Game.spawns['Spawn1']);
+
+    for (let tower of Game.spawns['Spawn1'].room.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}})) {
+      roleTower.run(tower);
+    }
 }
