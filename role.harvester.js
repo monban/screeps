@@ -1,20 +1,21 @@
 function findOrRememberSource(creep)
 {
-    if (!Memory.source_claims) {
-        Memory.source_claims = new Array();
-    }
-    if (creep.memory.source) {
-        return Game.getObjectById(creep.memory.source);
-    } else {
-        var sources = creep.room.find(FIND_SOURCES);
-        for (var i=0; i<sources.length; i++) {
-            var source = sources[i];
-            if (Memory.source_claims[source.id])
-                continue;
-            creep.memory.source = source.id;
-            Memory.source_claims[source.id] = true;
-        }
-    }
+//    if (!Memory.source_claims) {
+//        Memory.source_claims = new Array();
+//    }
+//    if (creep.memory.source) {
+//        return Game.getObjectById(creep.memory.source);
+//    } else {
+//        var sources = creep.room.find(FIND_SOURCES);
+//        for (var i=0; i<sources.length; i++) {
+//            var source = sources[i];
+//            if (Memory.source_claims[source.id])
+//                continue;
+//            creep.memory.source = source.id;
+//            Memory.source_claims[source.id] = true;
+//        }
+//    }
+    return Game.getObjectById('55db3414efa8e3fe66e05bb3');
 }
 
 var roleHarvester = {
