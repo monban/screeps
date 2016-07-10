@@ -12,7 +12,7 @@ function gotoNextTask(creep)
 function damagedBuildings(creep)
 {
     return creep.room.find(FIND_STRUCTURES, {filter:function(structure) {
-        return (structure.structureType == STRUCTURE_WALL) && structure.hits < 5000;
+        return (structure.structureType == STRUCTURE_WALL) && (structure.hits < 50000) && (structure.hitsMax > 50000) ;
     }});
 
 }
