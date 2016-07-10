@@ -3,7 +3,8 @@ module.exports = {
     if (_.sum(creep.carry) == creep.carryCapacity) {
       storages = creep.room.find(FIND_MY_STRUCTURES, {
         filter: (i) => (
-          i.structureType == STRUCTURE_TOWER && i.energy < i.energyCapacity
+          (i.structureType == STRUCTURE_TOWER && i.energy < i.energyCapacity) ||
+          (i.structureType == STRUCTURE_EXTENSION && i.energy < i.energyCapacity)
         )
       });
       var target = storages[0];
