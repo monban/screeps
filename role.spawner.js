@@ -16,11 +16,10 @@ module.exports = {
             } else if (upgraders.length < 1 || spawn.energy == spawn.energyCapacity) {
                 spawn.createCreep(roleUpgrader.bodyparts, null, {role: 'upgrader'});
             } else {
-                for (var name in upgraders) {
-        			var upgrader = upgraders[name];
-        			if (spawn.energy > upgrader.carryCapacity) {
-    			    	spawn.transferEnergy(upgrader);
-	   		        }
+                for (const upgrader of upgraders) {
+                  if (spawn.energy > upgrader.carryCapacity) {
+                    spawn.transferEnergy(upgrader);
+                  }
                 }
             }
         }

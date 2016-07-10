@@ -5,14 +5,15 @@ var roleSpawner = require('role.spawner');
 var roleTower = require('role.tower');
 
 module.exports.loop = function () {
+    var spawn = Game.spawns['Spawn1'];
+    var room = spawn.room;
     for(var name in Memory.creeps) {
         if(!Game.creeps[name]) {
             delete Memory.creeps[name];
         }
     }
 
-    for(var name in Game.creeps) {
-        var creep = Game.creeps[name];
+    for(const creep of room.find(FIND_MY_CREEPS)) {
         if(creep.memory.role == 'harvester') {
             roleHarvester.run(creep);
         }
@@ -23,9 +24,9 @@ module.exports.loop = function () {
             roleHauler.run(creep);
         }
     }
-    roleSpawner.run(Game.spawns['Spawn1']);
+    roleSpawner.run(spawn);
 
-    for (let tower of Game.spawns['Spawn1'].room.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}})) {
+    for (let tower of spawn.room.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}})) {
       roleTower.run(tower);
     }
 }
