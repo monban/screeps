@@ -15,7 +15,7 @@ function findOrRememberSource(creep)
 //            Memory.source_claims[source.id] = true;
 //        }
 //    }
-    return Game.getObjectById('55db3414efa8e3fe66e05bb3');
+    return creep.room.find(FIND_SOURCES)[0];
 }
 
 var roleHarvester = {
