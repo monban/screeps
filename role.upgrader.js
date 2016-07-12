@@ -52,15 +52,19 @@ var roleUpgrader = {
         }
         break;
       case 'refuel':
-        if (creep.room.storage) {
-          if (creep.room.storage.transfer(creep, RESOURCE_ENERGY, creep.carryCapacity) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(creep.room.storage);
-          }
-        } else {
-          if (Game.spaws['Spawn1'].transferEnergy(creep, creep.carryCapacity) != OK) {
-            creep.moveTo(creep.room.storage);
-          }
+        var target = creep.room.storage || Game.spawns['Spawn1'];
+        var result = creep.withdraw(target, RESOURCE_ENERGY, creep.carryCapacity);
+        switch (result) {
+          case ERR_NOT_IN_RANGE:
+            creep.moveTo(target);
+            break;
+          case ERR_NOT_ENOUGH_RESOURCES:
+            break;
+          default:
+            gotoNextTask(creep);
+            break;
         }
+        break;
       default:
         gotoNextTask(creep);
         break;
