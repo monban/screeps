@@ -1,7 +1,7 @@
 module.exports = {
   run: function(creep) {
     if (_.sum(creep.carry) == creep.carryCapacity) {
-      storages = creep.room.find(FIND_MY_STRUCTURES, {
+      var storages = creep.room.find(FIND_MY_STRUCTURES, {
         filter: (i) => (
                     (i.structureType == STRUCTURE_TOWER && i.energy < i.energyCapacity) ||
                     (i.structureType == STRUCTURE_STORAGE && _.sum(i.store) < i.storeCapacity) ||
