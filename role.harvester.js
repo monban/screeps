@@ -28,10 +28,8 @@ var roleHarvester = {
             creep.suicide();
         }
 
-        if (Game.spawns['Spawn1'].energy < Game.spawns['Spawn1'].energyCapacity) {
-            if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(source);
-            }
+        if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(source);
         }
 	},
 	bodyparts: [MOVE, WORK, WORK]
