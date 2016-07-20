@@ -13,7 +13,7 @@ module.exports = {
         spawn.createCreep(roleHarvester.bodyparts, null, {role: 'harvester'});
       } else if (haulers.length < 2) {
         spawn.createCreep(roleHauler.bodyparts, null, {role: 'hauler'});
-      } else if (upgraders.length < 8) {
+      } else if (upgraders.length < 7) {
         spawn.createCreep(roleUpgrader.bodyparts, null, {role: 'upgrader'});
       }
     }
