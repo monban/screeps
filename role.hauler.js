@@ -1,3 +1,21 @@
+function compare_buildings_by_priority(a, b)
+{
+  const energyPriority = [
+    STRUCTURE_SPAWN,
+    STRUCTURE_TOWER,
+    STRUCTURE_EXTENSION,
+    STRUCTURE_STORAGE
+  ];
+  if (a.structureType == b.structureType)
+    return 0;
+  const a_priority = energyPriority.indexOf(a.structureType);
+  const b_priority = energyPriority.indexOf(b.structureType);
+  if (a_priority < b_priority)
+		return -1;
+	if (a_priority > b_priority)
+		return 1;
+}
+
 module.exports = {
   run: function(creep) {
     if ((creep.room.lookForAt(LOOK_STRUCTURES, creep).length == 0) && (creep.room.lookForAt(LOOK_CONSTRUCTION_SITES, creep).length == 0)) {
@@ -5,19 +23,12 @@ module.exports = {
     }
     if (_.sum(creep.carry) == creep.carryCapacity) {
       var storages = creep.room.find(FIND_MY_STRUCTURES, {
-        filter: i => i.energy < (i.energyCapacity / 2)
+        filter: i => (i.structureType == STRUCTURE_EXTENSION && i.energy < i.energyCapacity) ||
+          (i.structureType == STRUCTURE_STORAGE && _.sum(i.store) < i.storeCapacity) ||
+          (i.energy < (i.energyCapacity - creep.carryCapacity))
       });
-      storages.sort(function(a,b) {
-        var ast = a.structureType;
-        var bst = b.structureType;
-        if (ast == bst)
-          return 0;
-        if (ast == STRUCTURE_TOWER) // Give towers first priority on energy
-          return -1;
-        return 1;
-      });
+      storages.sort(compare_buildings_by_priority);
       var target = storages[0];
-      target = target || creep.room.storage;
       if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         creep.moveTo(target);
       }
