@@ -20,6 +20,7 @@ function compare_buildings_by_priority(a, b)
 
 function doDelivery(creep)
 {
+  creep.say('delivering');
   var storages = creep.room.find(FIND_MY_STRUCTURES, {
     filter: i => (i.structureType == STRUCTURE_EXTENSION && i.energy < i.energyCapacity) ||
       (i.structureType == STRUCTURE_STORAGE && _.sum(i.store) < i.storeCapacity) ||
@@ -34,6 +35,7 @@ function doDelivery(creep)
 
 function doRefuel(creep)
 {
+  creep.say('refueling');
   const storages = creep.room.find(FIND_STRUCTURES, {
     filter: i => i.structureType == STRUCTURE_CONTAINER 
   });
@@ -53,7 +55,6 @@ function doRefuel(creep)
 
 module.exports = {
   run: function(creep) {
-    creep.say(creep.memory.mode);
     if ((creep.room.lookForAt(LOOK_STRUCTURES, creep).length == 0) && (creep.room.lookForAt(LOOK_CONSTRUCTION_SITES, creep).length == 0)) {
       creep.room.createConstructionSite(creep, STRUCTURE_ROAD);
     }
