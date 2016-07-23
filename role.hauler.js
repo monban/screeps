@@ -1,3 +1,5 @@
+"use strict";
+
 function compare_buildings_by_priority(a, b)
 {
   const energyPriority = [
@@ -32,10 +34,19 @@ function doDelivery(creep)
 
 function doRefuel(creep)
 {
-  var target = creep.pos.findClosestByRange(FIND_DROPPED_ENERGY);
-  if(target) {
-    if(creep.pickup(target) == ERR_NOT_IN_RANGE) {
-      creep.moveTo(target);
+  const storages = creep.room.find(FIND_STRUCTURES, {
+    filter: i => i.structureType == STRUCTURE_CONTAINER 
+  });
+  if (storages.length > 0) {
+    if (creep.withdraw(storages[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+      creep.moveTo(storages[0]);
+    }
+  } else {
+    const target =  creep.pos.findClosestByRange(FIND_DROPPED_ENERGY);
+    if (target) {
+      if (creep.pickup(target) == ERR_NOT_IN_RANGE) {
+        creep.moveTo(target);
+      }
     }
   }
 }
