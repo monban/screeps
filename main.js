@@ -4,29 +4,50 @@ var roleHauler = require('role.hauler');
 var roleSpawner = require('role.spawner');
 var roleTower = require('role.tower');
 
+function senescense(creep)
+{
+  creep.say('senescense');
+  if (creep.pos.isNearTo(Game.spawns['Spawn1'])) {
+    switch (Game.spawns['Spawn1'].renewCreep(creep)) {
+      case ERR_FULL:
+      creep.memory.senescense = false;
+      break;
+      case OK:
+      creep.memory.senescense = true;
+      break;
+    }
+  } else {
+    creep.moveTo(Game.spawns['Spawn1']);
+  }
+}
+
 module.exports.loop = function () {
-    var spawn = Game.spawns['Spawn1'];
-    var room = spawn.room;
-    for(var name in Memory.creeps) {
-        if(!Game.creeps[name]) {
-            delete Memory.creeps[name];
-        }
+  var spawn = Game.spawns['Spawn1'];
+  var room = spawn.room;
+  for(var name in Memory.creeps) {
+    if(!Game.creeps[name]) {
+      delete Memory.creeps[name];
     }
+  }
 
-    for(const creep of room.find(FIND_MY_CREEPS)) {
-        if(creep.memory.role == 'harvester') {
-            roleHarvester.run(creep);
-        }
-        if(creep.memory.role == 'upgrader') {
-            roleUpgrader.run(creep);
-        }
-        if(creep.memory.role == 'hauler') {
-            roleHauler.run(creep);
-        }
+  for(const creep of room.find(FIND_MY_CREEPS)) {
+    if (creep.ticksToLive < 150 || creep.memory.senescense == true) {
+      senescense(creep);
+    } else {
+      if(creep.memory.role == 'harvester') {
+        roleHarvester.run(creep);
+      }
+      if(creep.memory.role == 'upgrader') {
+        roleUpgrader.run(creep);
+      }
+      if(creep.memory.role == 'hauler') {
+        roleHauler.run(creep);
+      }
     }
-    roleSpawner.run(spawn);
+  }
+  roleSpawner.run(spawn);
 
-    for (let tower of spawn.room.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}})) {
-      roleTower.run(tower);
-    }
+  for (let tower of spawn.room.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}})) {
+    roleTower.run(tower);
+  }
 }
