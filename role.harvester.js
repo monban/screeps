@@ -40,7 +40,7 @@ var roleHarvester = {
     }
 
     // Is someone already in our spot?
-    if (creep.room.lookForAt(LOOK_CREEPS, creep.memory.spot.x, creep.memory.spot.y)) {
+    if (_.filter(creep.room.lookForAt(LOOK_CREEPS, creep.memory.spot.x, creep.memory.spot.y), i => i != creep)) {
       // You're standing in my spot Sir
       findMySpot(creep);
     }
