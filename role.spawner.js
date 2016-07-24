@@ -9,11 +9,11 @@ module.exports = {
       var haulers = _.filter(Game.creeps, (creep) => creep.memory.role == 'hauler');
       var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
 
-      if (harvesters.length < 2) {
+      if (harvesters.length < 3) {
         spawn.createCreep(roleHarvester.bodyparts, null, {role: 'harvester'});
-      } else if (haulers.length < 2) {
+      } else if (haulers.length < 3) {
         spawn.createCreep(roleHauler.bodyparts, null, {role: 'hauler'});
-      } else if (upgraders.length < 7) {
+      } else if (upgraders.length < 3) {
         spawn.createCreep(roleUpgrader.bodyparts, null, {role: 'upgrader'});
       }
     }
