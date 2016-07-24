@@ -68,7 +68,7 @@ module.exports = {
         doRefuel(creep);
       }
     } else {
-       if (_.sum(creep.carry) == 0) {
+       if (creep.carry[RESOURCE_ENERGY] == 0) {
          creep.memory.mode = 'refuel';
          doRefuel(creep); 
        } else {
