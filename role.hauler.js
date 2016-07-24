@@ -72,7 +72,7 @@ module.exports = {
          creep.memory.mode = 'refuel';
          doRefuel(creep); 
        } else {
-         doDelivery(Creep);
+         doDelivery(creep);
        }
     }
   },
