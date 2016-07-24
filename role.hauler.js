@@ -36,19 +36,20 @@ function doDelivery(creep)
 function doRefuel(creep)
 {
   creep.say('refueling');
-  const storages = creep.room.find(FIND_STRUCTURES, {
-    filter: i => i.structureType == STRUCTURE_CONTAINER 
-  });
-  storages.sort((a,b) => b.store[RESOURCE_ENERGY] - a.store[RESOURCE_ENERGY]);
-  if (storages.length > 0) {
-    if (creep.withdraw(storages[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-      creep.moveTo(storages[0]);
+  const target =  creep.pos.findClosestByRange(FIND_DROPPED_ENERGY);
+  if (target) {
+    if (creep.pickup(target) == ERR_NOT_IN_RANGE) {
+      creep.moveTo(target);
+      return;
     }
   } else {
-    const target =  creep.pos.findClosestByRange(FIND_DROPPED_ENERGY);
-    if (target) {
-      if (creep.pickup(target) == ERR_NOT_IN_RANGE) {
-        creep.moveTo(target);
+    const storages = creep.room.find(FIND_STRUCTURES, {
+      filter: i => i.structureType == STRUCTURE_CONTAINER 
+    });
+    storages.sort((a,b) => b.store[RESOURCE_ENERGY] - a.store[RESOURCE_ENERGY]);
+    if (storages.length > 0) {
+      if (creep.withdraw(storages[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+        creep.moveTo(storages[0]);
       }
     }
   }
