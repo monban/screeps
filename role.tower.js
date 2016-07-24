@@ -2,8 +2,10 @@
 
 function getNextRepairTarget(tower) {
   const roads = tower.room.find(FIND_STRUCTURES, {
-    filter: i => i.structureType == STRUCTURE_ROAD && i.hits < i.hitsMax
+    filter: i => i.structureType == STRUCTURE_ROAD && i.hits < i.hitsMax ||
+      i.structureType == STRUCTURE_CONTAINER && i.hits < i.hitsMax
   });
+  roads.sort((a,b) => b.hits - a.hits);
   if (roads.length != 0) {
     Memory.towers[tower.id].repairTarget = roads[0].id;
   }
