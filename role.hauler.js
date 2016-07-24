@@ -60,7 +60,7 @@ module.exports = {
     if ((creep.room.lookForAt(LOOK_STRUCTURES, creep).length == 0) && (creep.room.lookForAt(LOOK_CONSTRUCTION_SITES, creep).length == 0)) {
       creep.room.createConstructionSite(creep, STRUCTURE_ROAD);
     }
-    if (creep.memory.mode = 'refuel') {
+    if (creep.memory.mode == 'refuel') {
       if (_.sum(creep.carry) == creep.carryCapacity) {
         creep.memory.mode = 'deliver';
         doDelivery(creep);
