@@ -36,10 +36,15 @@ function doDelivery(creep)
 function doRefuel(creep)
 {
   creep.say('refueling');
-  const target =  creep.pos.findClosestByRange(FIND_DROPPED_ENERGY);
-  if (target) {
-    if (creep.pickup(target) == ERR_NOT_IN_RANGE) {
-      creep.moveTo(target);
+  const drops =  creep.room.find(FIND_DROPPED_ENERGY, {filter: i =>
+    creep.pos.getRangeTo(i.pos) < 10 ||
+    i.amount > 150
+  });
+  drops.sort((a,b) => b.amount - a.amount);
+  
+  if (drops.length > 0) {
+    if (creep.pickup(drops[0]) == ERR_NOT_IN_RANGE) {
+      creep.moveTo(drops[0]);
       return;
     }
   } else {
