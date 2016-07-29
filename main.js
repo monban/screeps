@@ -2,7 +2,8 @@ var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleHauler = require('role.hauler');
 var roleSpawner = require('role.spawner');
-var roleTower = require('role.tower');
+const roleTower = require('role.tower');
+const profiler = require('screeps-profiler');
 
 function senescense(creep)
 {
@@ -20,8 +21,7 @@ function senescense(creep)
     creep.moveTo(Game.spawns['Spawn1']);
   }
 }
-
-module.exports.loop = function () {
+function main() {
   var spawn = Game.spawns['Spawn1'];
   var room = spawn.room;
   for(var name in Memory.creeps) {
@@ -50,4 +50,9 @@ module.exports.loop = function () {
   for (let tower of spawn.room.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}})) {
     roleTower.run(tower);
   }
+}
+
+profiler.enable();
+module.exports.loop = function() {
+  profiler.wrap(main);
 }
