@@ -33,29 +33,39 @@ function doDelivery(creep)
   }
 }
 
-function doRefuel(creep)
+function findDroppedEnergy(creep)
 {
-  creep.say('refueling');
   const drops =  creep.room.find(FIND_DROPPED_ENERGY, {filter: i =>
     creep.pos.getRangeTo(i.pos) < 10 ||
-    i.amount > 150
+      i.amount > 150
   });
   drops.sort((a,b) => b.amount - a.amount);
   
   if (drops.length > 0) {
     if (creep.pickup(drops[0]) == ERR_NOT_IN_RANGE) {
       creep.moveTo(drops[0]);
+    }
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function doRefuel(creep)
+{
+  creep.say('refueling');
+  if (creep.room.find(FIND_HOSTILE_CREEPS).length == 0) {
+    if (findDroppedEnergy(creep)) {
       return;
     }
-  } else {
-    const storages = creep.room.find(FIND_STRUCTURES, {
-      filter: i => i.structureType == STRUCTURE_CONTAINER 
-    });
-    storages.sort((a,b) => b.store[RESOURCE_ENERGY] - a.store[RESOURCE_ENERGY]);
-    if (storages.length > 0) {
-      if (creep.withdraw(storages[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-        creep.moveTo(storages[0]);
-      }
+  }
+  const storages = creep.room.find(FIND_STRUCTURES, {
+    filter: i => i.structureType == STRUCTURE_CONTAINER 
+  });
+  storages.sort((a,b) => b.store[RESOURCE_ENERGY] - a.store[RESOURCE_ENERGY]);
+  if (storages.length > 0) {
+    if (creep.withdraw(storages[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+      creep.moveTo(storages[0]);
     }
   }
 }
