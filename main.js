@@ -23,32 +23,45 @@ function senescense(creep)
   }
 }
 function main() {
-  const spawn = Game.spawns['Spawn1'];
-  const room = spawn.room;
+  // Every 100 ticks
   if (Game.time % 100) {
+    // Clean up memory
     utils.memory.clean();
   }
 
-  for(const creep of room.find(FIND_MY_CREEPS)) {
-    if (creep.ticksToLive < 150 || creep.memory.senescense == true) {
-      senescense(creep);
-    } else {
-      if(creep.memory.role == 'harvester') {
-        roleHarvester.run(creep);
-      }
-      if(creep.memory.role == 'upgrader') {
-        roleUpgrader.run(creep);
-      }
-      if(creep.memory.role == 'hauler') {
-        roleHauler.run(creep);
+  _.forEach(Game.rooms, function(room) {
+    for(const creep of room.find(FIND_MY_CREEPS)) {
+      if (creep.ticksToLive < 150 || creep.memory.senescense == true) {
+        // This creep is about to die, override AI and be renewed
+        senescense(creep);
+      } else {
+        // Run the correct role function based on memory.role
+        switch (creep.memory.role) {
+          case 'harvester' :
+            roleHarvester.run(creep);
+            break;
+          case 'upgrader':
+            roleUpgrader.run(creep);
+            break;
+          case 'hauler':
+            roleHauler.run(creep);
+            break;
+        }
       }
     }
-  }
-  roleSpawner.run(spawn);
-
-  for (let tower of spawn.room.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}})) {
-    roleTower.run(tower);
-  }
+    for (const structure of room.find(FIND_MY_STRUCTURES)) {
+      switch (structure.structureType) {
+        case STRUCTURE_TOWER:
+          roleTower.run(structure);
+          break;
+        case STRUCTURE_SPAWN:
+          roleSpawner.run(structure);
+          break;
+        default:
+          break;
+      }
+    }
+  });
 }
 
 profiler.enable();
