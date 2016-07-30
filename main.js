@@ -1,7 +1,7 @@
-var roleHarvester = require('role.harvester');
-var roleUpgrader = require('role.upgrader');
-var roleHauler = require('role.hauler');
-var roleSpawner = require('role.spawner');
+const roleHarvester = require('role.harvester');
+const roleUpgrader = require('role.upgrader');
+const roleHauler = require('role.hauler');
+const roleSpawner = require('role.spawner');
 const roleTower = require('role.tower');
 const profiler = require('screeps-profiler');
 
@@ -22,9 +22,9 @@ function senescense(creep)
   }
 }
 function main() {
-  var spawn = Game.spawns['Spawn1'];
-  var room = spawn.room;
-  for(var name in Memory.creeps) {
+  const spawn = Game.spawns['Spawn1'];
+  const room = spawn.room;
+  for(let name in Memory.creeps) {
     if(!Game.creeps[name]) {
       delete Memory.creeps[name];
     }
