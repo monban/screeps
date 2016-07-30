@@ -30,12 +30,24 @@ function findMySpot(creep)
   if (openSpots.length != 0) {
     return creep.room.getPositionAt(openSpots[0][0].x, openSpots[0][0].y);
   } else {
-    const goodEnoughSpot = _.find(spots, i => _.find(i, j => j.terrain == 'plain') && !_.find(i, j => j.creep))[0];
-    if (goodEnoughSpot) {
-      return creep.room.getPositionAt(goodEnoughSpot.x, goodEnoughSpot.y);
+    const goodEnoughSpots = _.find(spots, i => _.find(i, j => j.terrain == 'plain') && !_.find(i, j => j.creep));
+    if (goodEnoughSpots) {
+      return creep.room.getPositionAt(goodEnoughSpot[0].x, goodEnoughSpot[0].y);
     } else
       return null;
   }
+}
+
+function setMemorySpot(creep, pos)
+{
+  creep.memory.spot = {x: pos.x, y: pos.y};
+}
+
+function getMemorySpot(creep)
+{
+  if (!creep.memory.spot)
+    return null;
+  return creep.room.getPositionAt(creep.memory.spot.x, creep.memory.spot.y);
 }
 
 var roleHarvester = {
@@ -43,27 +55,30 @@ var roleHarvester = {
   /** @param {Creep} creep **/
   run: function(creep) {
     // Do we even have a remembered spot?
-    if (!creep.memory.spot) {
+    let spot = getMemorySpot(creep);
+    if (!spot) {
       const newSpot = findMySpot(creep);
-      if (newSpot) {
-        creep.memory.spot = {x: newSpot.x, y: newSpot.y};
-      } else {
-        return;
-      }
+      if (newSpot)
+        setMemorySpot(creep, newSpot);
+        spot = newSpot;
     }
 
+    if (!spot)
+      return;
+
     // Is someone already in our spot?
-    const creepsAtSpot = creep.room.lookForAt(LOOK_CREEPS, creep.memory.spot.x, creep.memory.spot.y);
+    const creepsAtSpot = creep.room.lookForAt(LOOK_CREEPS, spot);
     if (creepsAtSpot.length != 0 && creepsAtSpot[0] != creep) {
       // You're standing in my spot Sir
-      creep.memory.spot = findMySpot(creep);
+      creep.memory.spot = null;
+      return;
     }
     // Are we at our spot?
-    if (creep.pos.x == creep.memory.spot.x && creep.pos.y == creep.memory.spot.y) {
+    if (spot.isEqualTo(creep)) {
       var source = findOrRememberSource(creep);
       creep.harvest(source);
     } else {
-      creep.moveTo(creep.memory.spot.x, creep.memory.spot.y);
+      creep.moveTo(spot);
     }
   },
   bodyparts: [MOVE, WORK, WORK]
