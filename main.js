@@ -4,6 +4,7 @@ const roleHauler = require('role.hauler');
 const roleSpawner = require('role.spawner');
 const roleTower = require('role.tower');
 const profiler = require('screeps-profiler');
+const utils = require('utils');
 
 function senescense(creep)
 {
@@ -24,10 +25,8 @@ function senescense(creep)
 function main() {
   const spawn = Game.spawns['Spawn1'];
   const room = spawn.room;
-  for(let name in Memory.creeps) {
-    if(!Game.creeps[name]) {
-      delete Memory.creeps[name];
-    }
+  if (Game.time % 100) {
+    utils.memory.clean();
   }
 
   for(const creep of room.find(FIND_MY_CREEPS)) {
