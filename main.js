@@ -6,7 +6,7 @@ profiler.enable();
 module.exports.loop = function() {
   profiler.wrap(function() {
     // Every 100 ticks
-    if (Game.time % 100) {
+    if (Game.time % 100 == 0) {
       // Clean up memory
       utils.memory.clean();
     }
