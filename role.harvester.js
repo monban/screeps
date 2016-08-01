@@ -31,7 +31,7 @@ function findMySpot(creep)
     return creep.room.getPositionAt(openSpots[0][0].x, openSpots[0][0].y);
   } else {
     const goodEnoughSpots = _.find(spots, i => _.find(i, j => j.terrain == 'plain') && !_.find(i, j => j.creep));
-    if (goodEnoughSpots.length) {
+    if (goodEnoughSpots && goodEnoughSpots.length) {
       return creep.room.getPositionAt(goodEnoughSpots[0].x, goodEnoughSpots[0].y);
     } else
       return null;
