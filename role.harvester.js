@@ -50,7 +50,7 @@ function getMemorySpot(creep)
   return creep.room.getPositionAt(creep.memory.spot.x, creep.memory.spot.y);
 }
 
-var roleHarvester = {
+const roleHarvester = {
 
   /** @param {Creep} creep **/
   run: function(creep) {
@@ -75,7 +75,7 @@ var roleHarvester = {
     }
     // Are we at our spot?
     if (spot.isEqualTo(creep)) {
-      var source = findOrRememberSource(creep);
+      const source = findOrRememberSource(creep);
       creep.harvest(source);
     } else {
       creep.moveTo(spot);

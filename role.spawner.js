@@ -1,6 +1,6 @@
-var roleHarvester = require('role.harvester');
-var roleUpgrader = require('role.upgrader');
-var roleHauler = require('role.hauler');
+const roleHarvester = require('role.harvester');
+const roleUpgrader = require('role.upgrader');
+const roleHauler = require('role.hauler');
 
 module.exports = {
   run: function(spawn) {

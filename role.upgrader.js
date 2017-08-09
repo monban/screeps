@@ -19,7 +19,7 @@ function damagedBuildings(creep)
 
 }
 
-var roleUpgrader = {
+const roleUpgrader = {
   /** @param {Creep} creep **/
   run: function(creep) {
     if (creep.carry.energy == 0) {
@@ -27,7 +27,7 @@ var roleUpgrader = {
     }
     switch (creep.memory.task) {
       case 'repair':
-        var damaged_buildings = damagedBuildings(creep);
+        const damaged_buildings = damagedBuildings(creep);
         if (damaged_buildings.length) {
           if (creep.repair(damaged_buildings[0]) == ERR_NOT_IN_RANGE) {
             creep.moveTo(damaged_buildings[0])
@@ -42,7 +42,7 @@ var roleUpgrader = {
         }
         break;
       case 'construct':
-        var target = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
+        const target = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
         if(target) {
           if (creep.build(target) == ERR_NOT_IN_RANGE) {
             creep.moveTo(target);
@@ -52,8 +52,8 @@ var roleUpgrader = {
         }
         break;
       case 'refuel':
-        var target = creep.room.storage || Game.spawns['Spawn1'];
-        var result = creep.withdraw(target, RESOURCE_ENERGY, creep.carryCapacity);
+        const target = creep.room.storage || Game.spawns['Spawn1'];
+        const result = creep.withdraw(target, RESOURCE_ENERGY, creep.carryCapacity);
         switch (result) {
           case ERR_NOT_IN_RANGE:
             creep.moveTo(target);

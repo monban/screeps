@@ -4,13 +4,13 @@ const utils = require('utils');
 function doDelivery(creep)
 {
   creep.say('delivering');
-  var storages = creep.room.find(FIND_MY_STRUCTURES, {
+  const storages = creep.room.find(FIND_MY_STRUCTURES, {
     filter: i => (i.structureType == STRUCTURE_EXTENSION && i.energy < i.energyCapacity) ||
       (i.structureType == STRUCTURE_STORAGE && _.sum(i.store) < i.storeCapacity) ||
       (i.energy < (i.energyCapacity - creep.carryCapacity))
   });
   storages.sort(utils.filters.compare_buildings_by_priority);
-  var target = storages[0];
+  const target = storages[0];
   if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
     creep.moveTo(target);
   }

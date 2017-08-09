@@ -24,7 +24,7 @@ module.exports = {
     if (!Memory.towers || !Memory.towers[tower.id]) {
       setupMemory(tower);
     }
-    var hostiles = tower.room.find(FIND_HOSTILE_CREEPS);
+    const hostiles = tower.room.find(FIND_HOSTILE_CREEPS);
     if (hostiles.length > 0) {
       tower.attack(hostiles[0]);
     } else {
