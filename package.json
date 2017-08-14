@@ -7,6 +7,7 @@
     "lodash": "^4.17.4"
   },
   "devDependencies": {
+    "grunt": "*",
     "grunt-screeps": "*",
     "mocha": "*",
     "chai": "*"
@@ -19,7 +20,7 @@
     "url": "git+https://github.com/monban/screeps.git"
   },
   "author": "Ian Flynn",
-  "license": "Apache",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/monban/screeps/issues"
   },
