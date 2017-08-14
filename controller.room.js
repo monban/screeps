@@ -1,7 +1,6 @@
 "use strict";
+const roles = require('controller.roles');
 const controllerCreep = require('controller.creep');
-const roleSpawner = require('role.spawner');
-//const roleTower = require('role.tower');
 
 module.exports = function(room) {
   if (!room.memory.tasks) { room.memory.tasks = [] }
@@ -22,10 +21,10 @@ module.exports = function(room) {
   for (const structure of room.find(FIND_MY_STRUCTURES)) {
     switch (structure.structureType) {
       case STRUCTURE_TOWER:
-        //roleTower.run(structure);
+        roles.tower.run(structure);
         break;
       case STRUCTURE_SPAWN:
-        roleSpawner.run(structure);
+        roles.spawner.run(structure);
         break;
       default:
         break;
