@@ -1,5 +1,5 @@
 "use strict";
-//const controllerCreep = require('controller.creep');
+const controllerCreep = require('controller.creep');
 const roleSpawner = require('role.spawner');
 //const roleTower = require('role.tower');
 
@@ -16,7 +16,7 @@ module.exports = function(room) {
 
 
   for(const creep of room.find(FIND_MY_CREEPS)) {
-    //controllerCreep(creep);
+    controllerCreep(creep);
   }
 
   for (const structure of room.find(FIND_MY_STRUCTURES)) {
@@ -37,21 +37,20 @@ function ensure_population(room, pops)
 {
   _.forOwn(pops, (count, creep_type) => {
     let current_population = room.find(FIND_MY_CREEPS, {
-      filter: {'role': creep_type}
+      'filter': {'memory': {'role': creep_type}}
     }).length;
     let queued_for_spawn = _.filter(room.memory.tasks,
       {'task': 'spawn_creep', 'role': creep_type}).length;
     let upcoming_population = current_population + queued_for_spawn;
     let needed = count - upcoming_population;
-    
-    if (needed > 0) {
-      _.times(needed, () => {
-        room.memory.tasks.push({
-          'task': 'spawn_creep', 
-          'role': creep_type,
-          'assigned': false
+    //console.log('need:' + needed + ' have:' + current_population + ' queued:' + queued_for_spawn + ' upcoming:' + upcoming_population);
+
+    _.times(needed, () => {
+      room.memory.tasks.push({
+        'task': 'spawn_creep', 
+        'role': creep_type,
+        'assigned': false
       })});
-    }
   });
 }
 

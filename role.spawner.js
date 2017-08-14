@@ -7,7 +7,10 @@ const roleBootstrapper = require('role.bootstrapper');
 module.exports = {
   run: function(spawn) {
     if (!spawn.spawning) {
-      const task_index = _.findIndex(spawn.room.memory.tasks, {'task': 'spawn_creep'});
+      // Remove any completed tasks
+      _.remove(spawn.room.memory.tasks, {'assigned': spawn.id});
+
+      const task_index = _.findIndex(spawn.room.memory.tasks, {'task': 'spawn_creep', 'assigned': false});
       if (task_index != -1) {
         let task = spawn.room.memory.tasks[task_index];
         let bodyparts = [];
@@ -27,7 +30,7 @@ module.exports = {
         }
         let res = spawn.canCreateCreep(bodyparts);
         if (res == OK) {
-          spawn.room.memory.tasks.splice(task_index, 1);
+          spawn.room.memory.tasks[task_index].assigned = spawn.id;
           spawn.createCreep(bodyparts, null, {'role': task.role});
         }
       }
