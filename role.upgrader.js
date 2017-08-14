@@ -1,3 +1,4 @@
+"use strict";
 function gotoNextTask(creep)
 {
   if (creep.carry.energy == 0) {
@@ -26,6 +27,7 @@ const roleUpgrader = {
       gotoNextTask(creep);
     }
     switch (creep.memory.task) {
+      let target;
       case 'repair':
         const damaged_buildings = damagedBuildings(creep);
         if (damaged_buildings.length) {
@@ -42,7 +44,7 @@ const roleUpgrader = {
         }
         break;
       case 'construct':
-        const target = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
+        target = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
         if(target) {
           if (creep.build(target) == ERR_NOT_IN_RANGE) {
             creep.moveTo(target);
@@ -52,7 +54,7 @@ const roleUpgrader = {
         }
         break;
       case 'refuel':
-        const target = creep.room.storage || Game.spawns['Spawn1'];
+        target = creep.room.storage || Game.spawns['Spawn1'];
         const result = creep.withdraw(target, RESOURCE_ENERGY, creep.carryCapacity);
         switch (result) {
           case ERR_NOT_IN_RANGE:

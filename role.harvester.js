@@ -1,5 +1,4 @@
 "use strict";
-
 function findOrRememberSource(creep)
 {
   //    if (!Memory.source_claims) {

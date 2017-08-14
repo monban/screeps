@@ -1,5 +1,4 @@
-'use strict';
-
+"use strict";
 module.exports = {
   filters: {
     compare_buildings_by_priority: function(a, b) {

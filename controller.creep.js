@@ -1,6 +1,7 @@
-const roleHarvester = require('role.harvester');
-const roleUpgrader = require('role.upgrader');
-const roleHauler = require('role.hauler');
+"use strict";
+var roleHarvester = require('role.harvester');
+var roleUpgrader = require('role.upgrader');
+var roleHauler = require('role.hauler');
 
 function senescense(creep)
 {

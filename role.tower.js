@@ -1,5 +1,4 @@
 "use strict";
-
 function getNextRepairTarget(tower) {
   const roads = tower.room.find(FIND_STRUCTURES, {
     filter: i => i.structureType == STRUCTURE_ROAD && i.hits < i.hitsMax ||
