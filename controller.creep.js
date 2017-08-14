@@ -1,7 +1,8 @@
 "use strict";
-var roleHarvester = require('role.harvester');
-var roleUpgrader = require('role.upgrader');
-var roleHauler = require('role.hauler');
+//var roleHarvester = require('role.harvester');
+//var roleUpgrader = require('role.upgrader');
+//var roleHauler = require('role.hauler');
+const roleBootstrapper = require('role.bootstrapper');
 
 function senescense(creep)
 {
@@ -27,6 +28,9 @@ module.exports = function(creep) {
   } else {
     // Run the correct role function based on memory.role
     switch (creep.memory.role) {
+      case 'bootstrapper':
+        roleBootstrapper.run(creep);
+        break;
       case 'harvester' :
         roleHarvester.run(creep);
         break;
