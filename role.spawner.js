@@ -29,8 +29,6 @@ module.exports = {
         if (res == OK) {
           spawn.room.memory.tasks.splice(task_index, 1);
           spawn.createCreep(bodyparts, null, {'role': task.role});
-        } else {
-          console.log('wanted to spawn ' + task.role + ' but couldnt, reason: ' + res);
         }
       }
     }
