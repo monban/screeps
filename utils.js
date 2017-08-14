@@ -6,7 +6,7 @@ module.exports = {
         STRUCTURE_SPAWN,
         STRUCTURE_TOWER,
         STRUCTURE_EXTENSION,
-          STRUCTURE_STORAGE
+        STRUCTURE_STORAGE
       ];
       if (a.structureType == b.structureType)
         return 0;
